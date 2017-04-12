@@ -1,0 +1,7 @@
+{
+	"id":"admin",
+	"uid":"2000",
+	"gid":0,
+	"home":"/home/admin",
+	"shell":"/bin/bash"
+}
