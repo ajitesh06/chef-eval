@@ -1,8 +1,4 @@
-#
-# Cookbook:: ec2-docker
-# Recipe:: docker-install
-#
-# Copyright:: 2017, The Authors, All Rights Reserved.
+
 execute 'docker.conf' do
   user 'root'
   action :run
@@ -20,28 +16,28 @@ execute 'docker' do
   user 'root'
   cwd '/home/ec2-user/'
   action :run
-  command 'yum install -y docker'
+  command 'yum install -y yum-utils'
 end
 
 execute 'docker.service' do
   user 'root'
   cwd '/home/ec2-user/'
   action :run
-  command 'service docker start'
+  command 'yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo'
 end
 
 execute 'group' do
   user 'root'
   cwd '/home/ec2-user/'
   action :run
-  command 'sudo usermod -a -G docker ec2-user'
+  command 'yum makecache fast'
 end
 
 execute 'docker-check' do
   user 'root'
   cwd '/home/ec2-user/'
   action :run
-  command 'docker info'
+  command 'yum install -y docker-ce'
 end
 
 template '/etc/systemd/system/docker.service.d/docker.conf' do

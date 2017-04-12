@@ -15,6 +15,11 @@ end
 docker_container 'jenkins-server' do
   repo 'jenkins'
   port '8080:8080'
-  command '--name=jenkins-server'
   action :run
-end 
+end
+
+execute 'jenk-pass' do
+  user 'root'
+  action :run
+  command 'docker exec jenkins-server cat /var/jenkins_home/secrets/initialAdminPassword'
+end
